@@ -19,17 +19,9 @@ export async function GET(request: Request) {
 
   const data = await apiRes.json();
 
-  console.log('/articles OK');
-
   if (!data) {
     return new Response('Not found', { status: 404 });
   }
 
-  // console.log(JSON.stringify({ hoge: 'hoge', fuga: 'fuga' }));
-
-  // return new Response(JSON.stringify({ hoge: 'hoge', fuga: 'fuga' }), {
-  //   status: 200,
-  // });
   return NextResponse.json(data);
-  // return new Response(JSON.stringify(data), { status: 200 });
 }

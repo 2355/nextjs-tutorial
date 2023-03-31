@@ -15,13 +15,6 @@ type QiitaArticle = {
 async function getArticles() {
   const res = await fetch('http://localhost:3000/api/articles');
 
-  console.log('/ OK');
-  console.log('res: ', { res });
-  console.log('res string: ', JSON.stringify(res));
-  // console.log(res.status);
-  // const body = res.body;
-  // console.log({ body });
-
   // エラーハンドリングを行うことが推奨されている
   if (!res.ok) {
     throw new Error('Failed to fetch articles');
