@@ -1,10 +1,39 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+import Image from 'next/image';
+import { Inter } from 'next/font/google';
+import styles from './page.module.css';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+type QiitaArticle = {
+  id: string;
+  title: string;
+  created_at: string;
+  updated_at: string;
+  body: string;
+};
+
+async function getArticles() {
+  const res = await fetch('http://localhost:3000/api/articles');
+
+  console.log('/ OK');
+  console.log('res: ', { res });
+  console.log('res string: ', JSON.stringify(res));
+  // console.log(res.status);
+  // const body = res.body;
+  // console.log({ body });
+
+  // エラーハンドリングを行うことが推奨されている
+  if (!res.ok) {
+    throw new Error('Failed to fetch articles');
+  }
+
+  const data = await res.json();
+  return data as QiitaArticle[];
+}
+
+export default async function Home() {
+  const articles = await getArticles();
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -32,6 +61,13 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
+        <h1>新着記事</h1>
+        <ul>
+          {articles.map((article) => (
+            <li key={article.id}>{article.title}</li>
+          ))}
+        </ul>
+
         <Image
           className={styles.logo}
           src="/next.svg"
@@ -87,5 +123,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }

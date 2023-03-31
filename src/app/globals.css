@@ -105,3 +105,11 @@ a {
     color-scheme: dark;
   }
 }
+
+footer {
+  background-color: #ccc;
+}
+
+.footer__text {
+  color: #333;
+}
